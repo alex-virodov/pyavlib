@@ -109,7 +109,10 @@ class Cv2GridCanvas:
                 self.canvas, col_starts, row_starts, x, y, self.images[(x,y)], y_offset=self.top_margin)
             title = self.titles[(x,y)]
             if len(title) > 0:
-                cv2.putText(self.canvas, self.titles[(x,y)] + " (" + str(self.images[(x,y)].dtype) + ")", (col_starts[x], row_starts[y] + 20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255,255,255), 2)
+                # cv2.putText(self.canvas, self.titles[(x,y)] + " (" + str(self.images[(x,y)].dtype) + ")", (col_starts[x], row_starts[y] + 20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255,255,255), 2)
+                cv2.putText(self.canvas, self.titles[(x, y)],
+                            (col_starts[x], row_starts[y] + 20),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255), 2)
 
         if False:
             for col_start in col_starts:
