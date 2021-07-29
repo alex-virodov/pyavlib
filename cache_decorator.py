@@ -32,6 +32,19 @@ def cache(filename_or_fun=None, is_debug=False):
         return decorator
 
 
+def time_each_call(func):
+    import time
+    # https://stackoverflow.com/questions/1622943/timeit-versus-timing-decorator
+    def wrapper(*arg, **kw):
+        '''source: http://www.daniweb.com/code/snippet368.html'''
+        t1 = time.time()
+        res = func(*arg, **kw)
+        t2 = time.time()
+        print(f'@time_each_call {func.__name__} {t2-t1}')
+        return res
+    return wrapper
+
+
 @cache('test_cache_decorator', is_debug=True)
 def test_fun(a, b, c):
     return a + b + c
@@ -46,10 +59,18 @@ def test_fun_2(a, b, c):
 def test_cache_decorator_3(a, b, c):
     return a + b + c
 
-
+# TODO: time_each_call doesn't work well with cache with autodetect name - one of them
+#  ends up seeing 'wrapper' as function name.
+# @time_each_call
 @cache
 def test_cache_decorator_4(a, b, c):
     return a + b + c
+
+@time_each_call
+def long_running_function(sleep_secs):
+    import time
+    time.sleep(sleep_secs)
+
 
 
 if __name__ == "__main__":
@@ -58,3 +79,6 @@ if __name__ == "__main__":
     print(test_fun_2(a=1, b=2, c=np.array([1, 3])))
     print(test_cache_decorator_3(a=1, b=2, c=np.array([1, 3])))
     print(test_cache_decorator_4(a=1, b=2, c=np.array([1, 3])))
+    print(test_cache_decorator_4(a=1, b=2, c=np.array([1, 3])))
+    long_running_function(sleep_secs=0.1)
+    long_running_function(sleep_secs=0.6)
