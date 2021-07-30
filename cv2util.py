@@ -17,6 +17,13 @@ def cv2_waitKey(window, delay):
     return -1
 
 
+def cv2_putText(img, text, org,
+                fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1,
+                color=255, thickness=1, lineType=cv2.LINE_AA):
+    """Like cv2.putText() but with defaults especially for font. """
+    cv2.putText(img, text, org, fontFace, fontScale, color, thickness, lineType)
+
+
 def cv2_upscale(image, factor=2):
     dsize = (int(image.shape[1] * factor), int(image.shape[0] * factor))
     return cv2.resize(image, dsize=dsize, interpolation=cv2.INTER_NEAREST)
