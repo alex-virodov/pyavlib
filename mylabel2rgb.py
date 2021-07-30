@@ -1,5 +1,4 @@
 import numpy as np
-import cv2
 
 def mylabel2rgb(label_image):
     # http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html
@@ -78,6 +77,7 @@ def mylabel2rgb(label_image):
     return result
 
 if __name__ == "__main__":
+    import cv2
     from pyavlib.cv2util import cv2_waitKey, cv2_upscale
     image = np.zeros(shape=(80, 80), dtype=np.int8)
 
