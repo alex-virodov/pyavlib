@@ -3,6 +3,7 @@ import numpy as np
 import time
 import matplotlib
 from enum import Enum
+from pyavlib.pltutil import plt_clf_subplots
 
 class OptVisCommands(Enum):
     InputPoll = 1
@@ -14,17 +15,15 @@ def inifinte_iterate(iter_fn):
     return looper
 
 
-def optimization_visualization_subplots(plot_rows, plot_cols):
-    fig = plt.gcf()
-    fig.clf()
-    ax = fig.subplots(plot_rows, plot_cols)
+def optimization_visualization_subplots(plot_rows, plot_cols, subplot_kws_map={}, rowspan_colspan_map={}):
+    ax = plt_clf_subplots(plot_rows, plot_cols, subplot_kws_map, rowspan_colspan_map)
 
     # Force to top once (but not during running, intentional).
     matplotlib.rcParams['figure.raise_window'] = True
     plt.show()
     matplotlib.rcParams['figure.raise_window'] = False
 
-    return fig, ax
+    return plt.gcf(), ax
 
 
 def optimization_visualization(fig, ax, compute_fn, draw_fn, count_hint=None):
