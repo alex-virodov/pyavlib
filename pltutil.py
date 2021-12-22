@@ -17,6 +17,13 @@ def plt_sca_cla(ax, title=None):
     if title is not None:
         plt.title(title)
 
+
+def plt_force_show():
+    plt.gcf().canvas.draw()
+    plt.show()
+    plt.gcf().canvas.flush_events()
+
+
 def plt_clf_subplots(n, m, subplot_kws_map = {}, rowspan_colspan_map = {}):
     """Clears figure and returns a flat list of axes"""
     plt.clf()
