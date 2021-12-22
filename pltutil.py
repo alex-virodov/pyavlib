@@ -54,6 +54,12 @@ def plt_clf_subplots(n, m, subplot_kws_map = {}, rowspan_colspan_map = {}):
 
     return axarr
 
+def bgr2rgb(image):
+    return image[:, :, (2, 1, 0)]
+
+def rgb2bgr(image):
+    return image[:, :, (2, 1, 0)]
+
 
 if __name__ == "__main__":
     print("start")

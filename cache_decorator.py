@@ -32,6 +32,9 @@ def cache(filename_or_fun=None, is_debug=False):
         return decorator
 
 
+def to_numpy_object_array(list):
+    return np.array(list, dtype=np.object)
+
 def time_each_call(func):
     import time
     # https://stackoverflow.com/questions/1622943/timeit-versus-timing-decorator
