@@ -61,6 +61,7 @@ def rgb2bgr(image):
     return image[:, :, (2, 1, 0)]
 
 def plt_show_in_loop():
+    plt.show()
     # thank you https://www.geeksforgeeks.org/how-to-update-a-plot-on-same-figure-during-the-loop/
     plt.gcf().canvas.draw()
     plt.gcf().canvas.flush_events()
