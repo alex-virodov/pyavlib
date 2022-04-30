@@ -22,6 +22,7 @@ def training_loop(model_evaluate_fn, model, optimizer, epochs, iters_per_epoch, 
             model.load_state_dict(torch.load(model_file))
             model.eval()
             if cache_mode == 'load':
+                visualize_fn(0)
                 return
         except FileNotFoundError:
             print(f'Failed to load model from {model_file}, training...')
