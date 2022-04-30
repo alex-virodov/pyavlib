@@ -24,7 +24,7 @@ def training_loop(model_evaluate_fn, model, optimizer, epochs, iters_per_epoch, 
             if cache_mode == 'load':
                 visualize_fn(0)
                 return
-        except FileNotFoundError:
+        except (FileNotFoundError, RuntimeError):
             print(f'Failed to load model from {model_file}, training...')
 
     keep_running = True
