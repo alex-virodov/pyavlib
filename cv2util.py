@@ -40,6 +40,10 @@ def cv2_normalize(image, max=None):
         return np.clip(image * 255.0 / max, 0.0, 255.0)
 
 
+def cv2_normalize_to_255(image):
+    return (image - np.min(image)) / (np.max(image) - np.min(image)) * 255.0
+
+
 def cv2_pyramid(image, levels):
     pyramid = [image] + [None] * (levels - 1)
     for i in range(1, levels):
