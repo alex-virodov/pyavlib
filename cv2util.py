@@ -62,3 +62,8 @@ def cv2_width(image):
 
 def cv2_height(image):
     return image.shape[0]
+
+
+def cv2_putText(img, text, org, color, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1.0, thickness=2, lineType=None, bottomLeftOrigin=None):
+    """like cv2.putText, but with reasonable defaults"""
+    cv2.putText(img, text, org, fontFace, fontScale, color, thickness, lineType, bottomLeftOrigin)
