@@ -18,7 +18,8 @@ def cache(filename_or_fun=None, is_debug=False):
                         dbg_print(f'cache hit!')
                         return data['result']
                 dbg_print(inferred_filename + ' cache mismatch, computing...')
-            except:
+            except BaseException as err:
+                dbg_print(err)
                 dbg_print(inferred_filename + ' failed to load cache, computing...')
 
             result = fun(**kwargs)
