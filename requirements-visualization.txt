@@ -1,0 +1,6 @@
+# matplotlib 3.5.2 (latest at this time) has a bug where the window is
+# constantly popping to front in interactive mode. For now I'm freezing
+# the version that works for me.
+matplotlib == 3.5.1
+opencv-python
+tqdm
