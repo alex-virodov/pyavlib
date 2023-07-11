@@ -66,6 +66,42 @@ def plt_show_in_loop():
     plt.gcf().canvas.draw()
     plt.gcf().canvas.flush_events()
 
+class DoubleSidedUpdatablePlot:
+    def __init__(self, ax):
+        self.axs = [ax, ax.twinx()]
+        self.plot_obj_ref = {}
+
+    def foreach_ax(self, callback):
+        for ax in self.axs:
+            callback(ax)
+
+    def plot_line(self, name, x, y, *args, **kwargs):
+        x = x if x is not None else range(len(y))
+        if name not in self.plot_obj_ref:
+            self.plot_obj_ref[name] = self.axs[0].plot(x, y, *args, **kwargs)[0]
+            print(f'{self.plot_obj_ref[name]=}')
+        else:
+            plot_obj = self.plot_obj_ref[name]
+            plot_obj.set_xdata(x)
+            plot_obj.set_ydata(y)
+
+    def relim(self):
+        self.axs[0].relim()
+        self.axs[0].autoscale_view()
+        self.axs[1].set_ylim(self.axs[0].get_ylim())
+        self.axs[1].autoscale_view()
+
+class ImageUpdatablePlot:
+    def __init__(self, ax):
+        self.ax = ax
+        self.plot_obj_ref = None
+
+    def imshow(self, image):
+        if self.plot_obj_ref is None:
+            self.plot_obj_ref = self.ax.imshow(image)
+        else:
+            self.plot_obj_ref.set_data(image)
+
 
 if __name__ == "__main__":
     print("start")

@@ -4,19 +4,6 @@ import numpy as np
 import cv2
 
 
-def cv2_waitKey(window, delay):
-    """Like cv2.waitKey, but also unblocks if window is closed"""
-    waited = 0
-    while waited < delay or delay == 0:
-        key = cv2.waitKeyEx(10)
-        waited += 1
-        if key != -1:
-            return key
-        if cv2.getWindowProperty(window, 0) < 0:
-            return -2
-    return -1
-
-
 def cv2_putText(img, text, org,
                 fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1,
                 color=255, thickness=1, lineType=cv2.LINE_AA):

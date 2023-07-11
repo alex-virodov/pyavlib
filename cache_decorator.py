@@ -32,6 +32,38 @@ def cache(filename_or_fun=None, is_debug=False):
     else:
         return decorator
 
+# This global must be in its own module to avoid recreating it in python console
+memdict = {}
+def memcache(arg=None, is_debug=False, reset=False, replace_on_args=False):
+    def dbg_print(*args):
+        if is_debug: print(*args)
+    # https://stackoverflow.com/questions/5929107/decorators-with-parameters
+    def decorator(fun):
+        def wrapper(**kwargs):
+            print(f'{dir(fun)=}')
+            dbg_print(f'called with kwargs={kwargs}')
+            global memdict
+            # https://stackoverflow.com/questions/13264511/typeerror-unhashable-type-dict
+            kwargs_key = frozenset(kwargs.items())
+            if replace_on_args:
+                # Linear search through keys, but in practice this array will be very small.
+                # If assert is triggered, need to reconsider :)
+                assert len(memdict) < 100
+                for (memdict_fun_name, memdict_kwargs) in list(memdict.keys()):
+                    if memdict_fun_name == fun.__name__:
+                        del memdict[(memdict_fun_name, memdict_kwargs)]
+
+            if ((fun.__name__, kwargs_key) not in memdict) or reset:
+                memdict[(fun.__name__, kwargs_key)] = fun(**kwargs)
+            return memdict[(fun.__name__, kwargs_key)]
+
+        return wrapper
+    # https://stackoverflow.com/questions/35572663/using-python-decorator-with-or-without-parentheses
+    if callable(arg):
+        return decorator(arg)
+    else:
+        return decorator
+
 
 def to_numpy_object_array(list):
     return np.array(list, dtype=np.object)
