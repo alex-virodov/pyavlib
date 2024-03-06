@@ -4,16 +4,13 @@ import numpy as np
 import cv2
 
 
-def cv2_putText(img, text, org,
-                fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1,
-                color=255, thickness=1, lineType=cv2.LINE_AA):
-    """Like cv2.putText() but with defaults especially for font. """
-    cv2.putText(img, text, org, fontFace, fontScale, color, thickness, lineType)
-
-
 def cv2_upscale(image, factor=2):
     dsize = (int(image.shape[1] * factor), int(image.shape[0] * factor))
     return cv2.resize(image, dsize=dsize, interpolation=cv2.INTER_NEAREST)
+
+def cv2_pad(image, top=0, bottom=0, left=0, right=0, value=0):
+    borderType = cv2.BORDER_CONSTANT
+    return cv2.copyMakeBorder(image, top, bottom, left, right, borderType, None, value)
 
 
 def cv2_downscale(image, factor=2):
@@ -51,6 +48,12 @@ def cv2_height(image):
     return image.shape[0]
 
 
-def cv2_putText(img, text, org, color, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1.0, thickness=2, lineType=None, bottomLeftOrigin=None):
+def cv2_putText(img, text, org, color=255, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1.0, thickness=2, lineType=None, bottomLeftOrigin=None):
     """like cv2.putText, but with reasonable defaults"""
     cv2.putText(img, text, org, fontFace, fontScale, color, thickness, lineType, bottomLeftOrigin)
+
+def cv2_gray2rgb(image):
+    return cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+
+def cv2_rgb2gray(image):
+    return cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)

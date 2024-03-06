@@ -1,9 +1,10 @@
 import cv2
 import numpy as np
+import os
 
 
 def main():
-    window_name = 'image'
+    window_name = os.path.basename(__file__)
 
     def on_change(value):
         print(value)

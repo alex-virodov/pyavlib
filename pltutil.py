@@ -51,7 +51,7 @@ def plt_clf_subplots(n, m, subplot_kws_map = {}, rowspan_colspan_map = {}):
             if i not in spanned_indexes:
                 # print(f'making subplot {i//m=} {i%m=} {spanned_indexes=}')
                 axarr.append(figure.add_subplot(gs[i // m, i % m], **subplot_kws_map.get(i, {})))
-
+    figure.tight_layout()
     return axarr
 
 def bgr2rgb(image):
@@ -65,6 +65,29 @@ def plt_show_in_loop():
     # thank you https://www.geeksforgeeks.org/how-to-update-a-plot-on-same-figure-during-the-loop/
     plt.gcf().canvas.draw()
     plt.gcf().canvas.flush_events()
+
+class UpdatablePlot:
+    def __init__(self, ax, set_xdata=True, title=None):
+        self.ax = ax
+        self.plot_obj_ref = {}
+        self.set_xdata = set_xdata
+        if title is not None:
+            ax.set_title(title)
+
+    def plot_line(self, name, x, y, *args, **kwargs):
+        x = x if x is not None else range(len(y))
+        if name not in self.plot_obj_ref:
+            self.plot_obj_ref[name] = self.ax.plot(x, y, *args, **kwargs)[0]
+            print(f'{self.plot_obj_ref[name]=}')
+        else:
+            plot_obj = self.plot_obj_ref[name]
+            if self.set_xdata:
+                plot_obj.set_xdata(x)
+            plot_obj.set_ydata(y)
+
+    def relim(self):
+        self.ax.relim()
+        self.ax.autoscale_view()
 
 class DoubleSidedUpdatablePlot:
     def __init__(self, ax):
