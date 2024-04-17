@@ -9,6 +9,12 @@ def interleave(a, b):
     c[1::2] = b
     return c
 
+def printopts_no_column_limit():
+    np.set_printoptions(linewidth=10_000)
+
+def feq(a_str):
+    # Replace '= ' with '=\n'
+    return a_str.replace('=', '=\n', 1)
 
 def list_of_tuples_to_tuple_of_lists(list_of_tuples):
     # https://stackoverflow.com/questions/7558908/unpacking-a-list-tuple-of-pairs-into-two-lists-tuples
