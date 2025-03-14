@@ -24,6 +24,11 @@ def cv2_normalize(image, max=None):
         return np.clip(image * 255.0 / max, 0.0, 255.0)
 
 
+def cv2_normalize_for_conv(image, max=None):
+    image = cv2_normalize(image)  # 0 .. 1.0
+    return image * 2.0 - 1.0
+
+
 def cv2_normalize_to_255(image):
     return (image - np.min(image)) / (np.max(image) - np.min(image)) * 255.0
 
@@ -57,3 +62,6 @@ def cv2_gray2rgb(image):
 
 def cv2_rgb2gray(image):
     return cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+def cv2_rgb2bgr(image):
+    return cv2.cvtColor(image, cv2.COLOR_RGB2BGR)

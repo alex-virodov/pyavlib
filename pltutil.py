@@ -77,6 +77,8 @@ class UpdatablePlot:
     def plot_line(self, name, x, y, *args, **kwargs):
         x = x if x is not None else range(len(y))
         if name not in self.plot_obj_ref:
+            if 'label' not in kwargs:
+                kwargs['label'] = name
             self.plot_obj_ref[name] = self.ax.plot(x, y, *args, **kwargs)[0]
             print(f'{self.plot_obj_ref[name]=}')
         else:
