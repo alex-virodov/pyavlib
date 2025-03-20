@@ -80,7 +80,7 @@ class UpdatablePlot:
             if 'label' not in kwargs:
                 kwargs['label'] = name
             self.plot_obj_ref[name] = self.ax.plot(x, y, *args, **kwargs)[0]
-            print(f'{self.plot_obj_ref[name]=}')
+            # print(f'{self.plot_obj_ref[name]=}')
         else:
             plot_obj = self.plot_obj_ref[name]
             if self.set_xdata:
