@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from scipy.spatial.transform import Rotation as R
 import numpy as np
-from vector import Vector4
+from pyavlib.vector import Vector4
 
 class Matrix4:
     def __init__(self, values=None):
@@ -27,6 +27,12 @@ class Matrix4:
         m_translate.mtx[1, 3] = y
         m_translate.mtx[2, 3] = z
         return m_translate * self
+
+    def __str__(self):
+        return str(self.v)
+
+    def __repr__(self):
+        return str(self.mtx)
 
     def __mul__(self, other):
         if isinstance(other, Vector4):

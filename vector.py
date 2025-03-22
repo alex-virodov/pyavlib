@@ -146,6 +146,9 @@ class Vector4:
     def __str__(self):
         return str(self.v)
 
+    def __repr__(self):
+        return 'Vector4(' + str(self.v) + ')'
+
     def __getitem__(self, i):
         return self.v[i]
 
