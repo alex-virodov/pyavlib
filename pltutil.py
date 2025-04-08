@@ -1,3 +1,4 @@
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import itertools
 import numpy as np
@@ -25,6 +26,8 @@ def plt_force_show():
 
 
 def plt_clf_subplots(n, m, subplot_kws_map = {}, rowspan_colspan_map = {}):
+    mpl.use('TkAgg')
+
     """Clears figure and returns a flat list of axes"""
     plt.clf()
 
