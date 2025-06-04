@@ -1,72 +1,7 @@
 import matplotlib.pyplot as plt
 from scipy.spatial.transform import Rotation as R
 import numpy as np
-
-class Vector4:
-    def __init__(self, x=0, y=0, z=0, w=1):
-        self.v = np.array([x, y, z, w])
-
-    @property
-    def x(self):
-        return self.v[0]
-
-    @property
-    def y(self):
-        return self.v[1]
-
-    @property
-    def z(self):
-        return self.v[2]
-
-    @property
-    def w(self):
-        return self.v[3]
-
-    def dot(self, other):
-        return np.dot(self.v, other.v)
-
-    def __str__(self):
-        return str(self.v)
-
-    def __mul__(self, other):
-        if isinstance(other, Vector4):
-            raise NotImplementedError('Vector4 * Vector4')
-        elif isinstance(other, (int, float, np.int32)):
-            v_result = Vector4()
-            v_result.v = other * self.v
-            return v_result
-        else:
-            raise TypeError(f'unsupported operand type {type(other)} for object {other}')
-
-    def __sub__(self, other):
-        if isinstance(other, Vector4):
-            v_result = Vector4()
-            v_result.v = self.v - other.v
-            return v_result
-        else:
-            raise TypeError(f'unsupported operand type {type(other)} for object {other}')
-    def __add__(self, other):
-        if isinstance(other, Vector4):
-            v_result = Vector4()
-            v_result.v = self.v + other.v
-            return v_result
-        else:
-            raise TypeError(f'unsupported operand type {type(other)} for object {other}')
-
-    def normalize(self):
-        v_result = Vector4()
-        v_result.v = self.v / np.linalg.norm(self.v)
-        return v_result
-
-    def homogenize(self):
-        v_result = Vector4()
-        v_result.v = self.v / self.w
-        return v_result
-
-    def cross(self, other):
-        print(f'cross={np.cross([self.x, self.y, self.z], [other.x, other.y, other.z])}')
-        cross = np.cross([self.x, self.y, self.z], [other.x, other.y, other.z])
-        return Vector4(cross[0], cross[1], cross[2], 0)
+from pyavlib.vector import Vector4
 
 class Matrix4:
     def __init__(self, values=None):
@@ -92,6 +27,12 @@ class Matrix4:
         m_translate.mtx[1, 3] = y
         m_translate.mtx[2, 3] = z
         return m_translate * self
+
+    def __str__(self):
+        return str(self.v)
+
+    def __repr__(self):
+        return str(self.mtx)
 
     def __mul__(self, other):
         if isinstance(other, Vector4):
