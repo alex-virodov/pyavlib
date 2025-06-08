@@ -2,6 +2,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import itertools
 import numpy as np
+import math
 
 
 def plot_rect_wh(ax, x0, y0, w, h, col):
@@ -77,6 +78,13 @@ class UpdatablePlot:
         if title is not None:
             ax.set_title(title)
 
+        self.relim_across_updates = False  # Enable directly if needed, it will cost additional mins/maxs
+        self.relim_pad = 0.05
+        self.minx = +math.inf
+        self.maxx = -math.inf
+        self.miny = +math.inf
+        self.maxy = -math.inf
+
     def plot_line(self, name, x, y, *args, **kwargs):
         x = x if x is not None else range(len(y))
         if name not in self.plot_obj_ref:
@@ -90,9 +98,27 @@ class UpdatablePlot:
                 plot_obj.set_xdata(x)
             plot_obj.set_ydata(y)
 
+        if self.relim_across_updates:
+            self.minx = min(np.min(x), self.minx)
+            self.maxx = max(np.max(x), self.maxx)
+            self.miny = min(np.min(y), self.miny)
+            self.maxy = max(np.max(y), self.maxy)
+
     def relim(self):
-        self.ax.relim()
-        self.ax.autoscale_view()
+        if self.relim_across_updates:
+            xpad = (self.maxx - self.minx) * self.relim_pad
+            ypad = (self.maxy - self.miny) * self.relim_pad
+            self.ax.set_xlim(self.minx - xpad, self.maxx + xpad)
+            self.ax.set_ylim(self.miny - ypad, self.maxy + ypad)
+            print(f'{self.minx=} {self.miny=} {self.maxx=} {self.maxy=}')
+        else:
+            self.ax.relim()
+            self.ax.autoscale_view()
+
+    @staticmethod
+    def convert_all_ax(ax):
+        return [UpdatablePlot(a) for a in ax]
+
 
 class DoubleSidedUpdatablePlot:
     def __init__(self, ax):
