@@ -21,6 +21,10 @@ def list_of_tuples_to_tuple_of_lists(list_of_tuples):
     return tuple(zip(*list_of_tuples))
 
 
+def normalize(np_array):
+    return np_array / np.linalg.norm(np_array)
+
+
 if __name__ == "__main__":
     a = np.array([1, 3, 5])
     b = np.array([2, 4, 6])
