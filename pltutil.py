@@ -110,7 +110,7 @@ class UpdatablePlot:
             ypad = (self.maxy - self.miny) * self.relim_pad
             self.ax.set_xlim(self.minx - xpad, self.maxx + xpad)
             self.ax.set_ylim(self.miny - ypad, self.maxy + ypad)
-            print(f'{self.minx=} {self.miny=} {self.maxx=} {self.maxy=}')
+            # print(f'{self.minx=} {self.miny=} {self.maxx=} {self.maxy=}')
         else:
             self.ax.relim()
             self.ax.autoscale_view()
